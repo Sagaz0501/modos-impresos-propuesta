@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modos Impresos · Imprenta en Bogotá</title>
+<meta name="description" content="Pendones, vinilos, avisos, corte láser y señalización para empresas y comercios en Bogotá. Cuéntenos qué necesita.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FBF8F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Varela+Round&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F3;
+    --ink:#1C1B20;
+    --ink-soft:#4A4852;
+    --line:rgba(28,27,32,.10);
+    --card:rgba(255,255,255,.80);
+    --cyan:#00A6DB;
+    --cyan-ink:#006A8E;
+    --magenta:#E5007D;
+    --magenta-ink:#AE005E;
+    --yellow:#FFD400;
+    --yellow-soft:#FFF4B8;
+    --key:#1C1B20;
+    --wa:#1F8F4E;
+    --radius:24px;
+    --shadow:0 1px 2px rgba(28,27,32,.05), 0 12px 32px -12px rgba(28,27,32,.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;font-size:18px;scroll-behavior:smooth;scroll-padding-top:84px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:1rem;line-height:1.6;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .ink-blobs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .ink-blobs span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.30}
+  .ink-blobs .c{width:420px;height:420px;background:var(--cyan);top:-120px;left:-140px}
+  .ink-blobs .m{width:380px;height:380px;background:var(--magenta);top:30%;right:-200px;opacity:.16}
+  .ink-blobs .y{width:460px;height:460px;background:var(--yellow);bottom:-180px;left:10%;opacity:.28}
+
+  h1,h2,h3{font-family:"Varela Round","Nunito Sans",sans-serif;font-weight:400;line-height:1.15;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  @media (min-width:640px){.wrap{padding:0 24px}}
+  section{padding:56px 0}
+  .kicker{display:inline-block;font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-ink);margin-bottom:10px}
+  .section-title{font-size:clamp(1.8rem,4.6vw,2.6rem);margin-bottom:12px}
+  .section-lead{color:var(--ink-soft);max-width:46ch;font-size:1.05rem}
+  .head-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+
+  .glass{background:var(--card);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%)}
+
+  /* botones */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font-weight:800;font-size:1rem;text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+  .btn-main{background:var(--magenta-ink);color:#fff;box-shadow:0 12px 28px -12px rgba(174,0,94,.7)}
+  .btn-wa{background:var(--wa);color:#fff;box-shadow:0 12px 28px -12px rgba(31,143,78,.7)}
+  .btn-ghost{background:rgba(255,255,255,.85);color:var(--ink);border:1px solid var(--line)}
+
+  /* aviso de vista previa */
+  .preview{background:var(--key);color:#fff;font-size:.85rem;text-align:center;padding:8px 16px}
+  .preview strong{color:var(--yellow)}
+  .preview a{color:#9BE3FA;font-weight:700}
+
+  /* encabezado */
+  .top{position:sticky;top:0;z-index:20;padding:10px 0}
+  .top .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:999px;padding:8px 8px 8px 18px}
+  .top img{height:40px;width:auto}
+  .nav{display:none;gap:4px}
+  .nav a{text-decoration:none;font-weight:700;font-size:.95rem;padding:10px 14px;border-radius:999px;color:var(--ink-soft)}
+  .nav a:hover{background:#fff;color:var(--ink)}
+  .top .btn{min-height:44px;padding:0 18px;font-size:.95rem}
+  @media (min-width:900px){.nav{display:flex}}
+
+  /* portada */
+  .hero{padding:28px 0 48px}
+  .hero .wrap{display:grid;gap:32px;align-items:center}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;color:var(--ink-soft)}
+  .cmyk{display:inline-grid;grid-template-columns:1fr 1fr;width:16px;height:16px;border-radius:4px;overflow:hidden;flex:none}
+  .cmyk i:nth-child(1){background:var(--cyan)}.cmyk i:nth-child(2){background:var(--magenta)}.cmyk i:nth-child(3){background:var(--yellow)}.cmyk i:nth-child(4){background:var(--key)}
+  .hero h1{font-size:clamp(2.5rem,8vw,4.4rem);margin-top:16px}
+  .hero h1 .brand{background:linear-gradient(90deg,var(--cyan-ink),var(--magenta-ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lead{font-size:clamp(1.08rem,2.4vw,1.25rem);margin-top:18px;max-width:40ch;color:var(--ink-soft)}
+  .hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .hero figure{margin:0;position:relative}
+  .hero figure img{width:100%;height:auto;aspect-ratio:5/3;object-fit:cover;border-radius:28px;box-shadow:0 30px 60px -28px rgba(28,27,32,.55)}
+  .hero figcaption{position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:center;gap:12px;border-radius:18px;padding:12px 16px;font-size:.92rem;line-height:1.35}
+  .hero figcaption strong{display:block}
+  .hero figcaption .cmyk{width:34px;height:34px;border-radius:9px}
+  @media (min-width:640px){.hero figcaption{right:auto;max-width:78%}}
+  .facts{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;color:var(--ink-soft);font-weight:700;font-size:.95rem}
+  .facts span{display:inline-flex;align-items:center;gap:8px}
+  .facts svg{color:var(--cyan-ink)}
+  @media (min-width:900px){.hero{padding:48px 0 64px}.hero .wrap{grid-template-columns:1fr 1.1fr;gap:48px}}
+
+  /* servicios */
+  .services{display:grid;gap:18px;margin-top:28px}
+  @media (min-width:640px){.services{grid-template-columns:1fr 1fr}}
+  @media (min-width:1000px){.services{grid-template-columns:repeat(4,1fr)}}
+  .svc{border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .svc::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--accent);z-index:1}
+  .svc img{aspect-ratio:4/3;object-fit:cover;width:100%;height:auto}
+  .svc .body{padding:20px 20px 22px}
+  .svc h3{font-size:1.35rem;margin-bottom:6px}
+  .svc p{color:var(--ink-soft);font-size:.96rem}
+  .c-cyan{--accent:var(--cyan)}.c-mag{--accent:var(--magenta)}.c-yel{--accent:var(--yellow)}.c-key{--accent:var(--key)}
+
+  /* qué imprimimos */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chip{border-radius:999px;padding:9px 16px;font-weight:700;font-size:.95rem;background:#fff;border:1px solid var(--line)}
+
+  /* pasos */
+  .steps{display:grid;gap:16px;margin-top:28px}
+  @media (min-width:900px){.steps{grid-template-columns:repeat(3,1fr)}}
+  .step{border-radius:var(--radius);padding:24px;display:flex;gap:16px;align-items:flex-start}
+  @media (min-width:900px){.step{flex-direction:column}}
+  .step .n{flex:none;width:56px;height:56px;border-radius:18px;display:grid;place-items:center;color:#fff;font-family:"Varela Round",sans-serif;font-size:1.6rem}
+  .step h3{font-size:1.35rem;margin-bottom:4px}
+  .step p{color:var(--ink-soft)}
+
+  /* portafolio */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .filters button{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.75);font:inherit;font-weight:700;font-size:.95rem;color:var(--ink-soft);cursor:pointer}
+  .filters button[aria-pressed="true"]{background:var(--key);color:#fff;border-color:var(--key)}
+  .gallery{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media (min-width:900px){.gallery{grid-template-columns:repeat(4,1fr);gap:14px}}
+  .gallery li{margin:0}
+  .gallery figure{margin:0;position:relative;overflow:hidden;border-radius:18px;box-shadow:var(--shadow)}
+  .gallery img{aspect-ratio:4/3;object-fit:cover;width:100%;height:auto;transition:transform .3s ease}
+  .gallery figure:hover img{transform:scale(1.04)}
+  .gallery figcaption{position:absolute;inset:auto 0 0 0;padding:28px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff;font-weight:800;font-size:.9rem;line-height:1.3}
+  .gallery figcaption span{display:block;font-weight:600;opacity:.85;font-size:.8rem}
+  .gallery li[hidden]{display:none}
+
+  /* nosotros */
+  .about{border-radius:32px;padding:28px 22px;display:grid;gap:28px}
+  .about img{border-radius:20px;width:100%;height:auto;aspect-ratio:5/3;object-fit:cover}
+  .about p + p{margin-top:12px}
+  .about .txt p{color:var(--ink-soft)}
+  .logos{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media (min-width:640px){.logos{grid-template-columns:repeat(5,1fr)}}
+  @media (min-width:1000px){.logos{grid-template-columns:repeat(7,1fr)}}
+  .logos li{background:#fff;border-radius:16px;border:1px solid var(--line);padding:6px}
+  .logos img{width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;filter:grayscale(1);opacity:.85;transition:filter .2s,opacity .2s}
+  .logos li:hover img{filter:none;opacity:1}
+  @media (min-width:900px){.about{padding:48px;grid-template-columns:1fr 1.1fr;align-items:center}}
+
+  /* pedido */
+  .order{display:grid;gap:24px}
+  @media (min-width:900px){.order{grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}}
+  .order .side p{color:var(--ink-soft)}
+  .reassure{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px}
+  .reassure li{display:flex;gap:12px;align-items:flex-start}
+  .reassure svg{flex:none;margin-top:4px;color:var(--cyan-ink)}
+  form.glass{border-radius:28px;padding:24px 20px;display:grid;gap:16px}
+  @media (min-width:640px){form.glass{padding:32px}}
+  .row2{display:grid;gap:16px}
+  @media (min-width:640px){.row2{grid-template-columns:1fr 1fr}}
+  label{display:block;font-weight:800;font-size:.95rem;margin-bottom:6px}
+  label small{font-weight:600;color:var(--ink-soft)}
+  input,select,textarea{width:100%;min-height:52px;border-radius:14px;border:1.5px solid rgba(28,27,32,.18);background:#fff;padding:12px 14px;font:inherit;color:var(--ink)}
+  textarea{min-height:120px;resize:vertical}
+  .hint{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
+  .form-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+  .form-foot p{font-size:.88rem;color:var(--ink-soft);max-width:34ch}
+  .err{color:var(--magenta-ink);font-weight:700;font-size:.9rem}
+
+  /* contacto */
+  .contact{display:grid;gap:14px;margin-top:28px}
+  @media (min-width:900px){.contact{grid-template-columns:repeat(4,1fr)}}
+  .ct{border-radius:22px;padding:20px;text-decoration:none;display:flex;gap:14px;align-items:flex-start}
+  .ct .ic{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff}
+  .ct strong{display:block;font-size:1rem}
+  .ct span{color:var(--ink-soft);font-size:.92rem;word-break:break-word}
+  a.ct:hover{background:#fff}
+
+  footer{padding:36px 0 96px;text-align:center;color:var(--ink-soft);font-size:.9rem}
+  footer img{height:44px;width:auto;margin:0 auto 10px}
+  @media (min-width:900px){footer{padding-bottom:40px}}
+
+  /* botón flotante de WhatsApp en celular */
+  .fab{position:fixed;right:16px;bottom:16px;z-index:30;width:60px;height:60px;border-radius:50%;background:var(--wa);display:grid;place-items:center;color:#fff;box-shadow:0 14px 30px -10px rgba(31,143,78,.8)}
+
+  .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}.btn,.gallery img{transition:none}}
+  @media (prefers-reduced-transparency:reduce){.glass{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}}
+</style>
+</head>
+<body>
+<div class="ink-blobs" aria-hidden="true"><span class="c"></span><span class="m"></span><span class="y"></span></div>
+
+<div class="preview" role="note"><strong>Vista previa para papá.</strong> Así se vería la página nueva de Modos. <a href="../">← Volver a la propuesta</a></div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar glass">
+      <a href="#inicio" aria-label="Modos Impresos, inicio"><img src="img/logo.png" alt="Modos Impresos" width="218" height="112"></a>
+      <nav class="nav" aria-label="Secciones">
+        <a href="#servicios">Servicios</a>
+        <a href="#trabajos">Trabajos</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a class="btn btn-main" href="#pedido">Haz tu pedido</a>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- PORTADA -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="tag glass"><span class="cmyk" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Imprenta en Bogotá · Ricaurte</span>
+        <h1>Que su negocio <span class="brand">se destaque.</span></h1>
+        <p class="lead">Pendones, vinilos, avisos, corte láser y señalización para empresas y comercios. Cuéntenos qué necesita y le enviamos la cotización.</p>
+        <div class="ctas">
+          <a class="btn btn-main" href="#pedido">Haz tu pedido
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="https://wa.me/573144719266?text=Hola%20Modos%20Impresos%2C%20quiero%20cotizar%20un%20trabajo." target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Escribir por WhatsApp</a>
+        </div>
+        <div class="facts">
+          <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Diseño, impresión e instalación</span>
+          <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Empresas y comercios</span>
+        </div>
+      </div>
+      <figure>
+        <img src="img/nosotrosModos.jpg" alt="Vitrina del local de Modos Impresos con el logo de colores" width="1000" height="600">
+        <figcaption class="glass"><span class="cmyk" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><strong>Nuestro local en Ricaurte</strong>Carrera 27 # 9-43, Local 111a</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" aria-labelledby="svc-t">
+    <div class="wrap">
+      <span class="kicker">Lo que hacemos</span>
+      <h2 class="section-title" id="svc-t">Servicios</h2>
+      <p class="section-lead">Desde una tarjeta hasta la fachada completa de su local.</p>
+      <div class="services">
+        <article class="svc glass c-cyan reveal">
+          <img src="img/trabajos/Servicios_02_GranFormato.jpg" alt="Fachada con impresión en gran formato" width="800" height="500" loading="lazy">
+          <div class="body"><h3>Gran formato</h3><p>Vinilo, banner, lona, lienzo y panaflex. Laminado mate o brillante.</p></div>
+        </article>
+        <article class="svc glass c-mag reveal">
+          <img src="img/trabajos/Servicios_02_Especiales.jpg" alt="Pieza cortada en láser" width="800" height="500" loading="lazy">
+          <div class="body"><h3>Corte láser</h3><p>MDF, poliestireno y acrílico. Letras y logos volumétricos.</p></div>
+        </article>
+        <article class="svc glass c-yel reveal">
+          <img src="img/trabajos/Servicios_01_Especiales.jpg" alt="Aviso en acrílico plano" width="800" height="500" loading="lazy">
+          <div class="body"><h3>Señalización</h3><p>Interior y exterior, en acrílico, poliestireno y estructura metálica.</p></div>
+        </article>
+        <article class="svc glass c-key reveal">
+          <img src="img/trabajos/Servicios_01_Pendon.jpg" alt="Roll up de 100 por 200 centímetros" width="800" height="500" loading="lazy">
+          <div class="body"><h3>Publicidad y puntos de venta</h3><p>Pendones, roll ups, vallas, pasacalles, habladores y tótems.</p></div>
+        </article>
+      </div>
+      <div class="chips reveal" aria-label="También imprimimos">
+        <span class="chip">Pendones</span><span class="chip">Vinilo adhesivo</span><span class="chip">Microperforado</span><span class="chip">Cerramientos de obra</span><span class="chip">Cajas de luz</span><span class="chip">Tarjetas</span><span class="chip">Volantes</span><span class="chip">Floor graphics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS -->
+  <section aria-labelledby="how-t">
+    <div class="wrap">
+      <span class="kicker">Cómo trabajamos</span>
+      <h2 class="section-title" id="how-t">De su idea a la calle.</h2>
+      <div class="steps">
+        <div class="step glass reveal"><span class="n" style="background:var(--cyan-ink)" aria-hidden="true">1</span>
+          <div><h3>Cuéntenos qué necesita</h3><p>Qué producto, medidas, cantidad y su archivo. Por esta página o por WhatsApp.</p></div></div>
+        <div class="step glass reveal"><span class="n" style="background:var(--magenta-ink)" aria-hidden="true">2</span>
+          <div><h3>Manuel le cotiza</h3><p>Revisa su pedido personalmente y le escribe con el valor.</p></div></div>
+        <div class="step glass reveal"><span class="n" style="background:var(--key)" aria-hidden="true">3</span>
+          <div><h3>Producimos e instalamos</h3><p>Imprimimos, cortamos y, si lo necesita, instalamos en su local u obra.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRABAJOS -->
+  <section id="trabajos" aria-labelledby="work-t">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="kicker">Trabajos recientes</span>
+          <h2 class="section-title" id="work-t">Portafolio</h2>
+        </div>
+        <a href="https://www.instagram.com/modosimpresos/" target="_blank" rel="noopener" style="font-weight:800;color:var(--cyan-ink);display:inline-flex;align-items:center;gap:8px;min-height:44px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>@modosimpresos</a>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar trabajos">
+        <button type="button" data-f="todo" aria-pressed="true">Todo</button>
+        <button type="button" data-f="Gran formato" aria-pressed="false">Gran formato</button>
+        <button type="button" data-f="Pequeño formato" aria-pressed="false">Pequeño formato</button>
+        <button type="button" data-f="Displays" aria-pressed="false">Displays</button>
+        <button type="button" data-f="Especiales" aria-pressed="false">Especiales</button>
+      </div>
+      <ul class="gallery" id="gallery"></ul>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros" aria-labelledby="about-t">
+    <div class="wrap">
+      <div class="about glass reveal">
+        <div class="txt">
+          <span class="kicker">Nosotros</span>
+          <h2 class="section-title" id="about-t">Modos Impresos, Ricaurte.</h2>
+          <p>Somos una empresa con amplia experiencia en impresión. Nos adaptamos a lo que necesita cada negocio, con buen servicio y compromiso.</p>
+          <p>Tenemos un equipo de profesionales y una amplia gama de formatos y materiales para hacer trabajos de alta calidad.</p>
+        </div>
+        <img src="img/taller.jpg" alt="Pruebas de impresión revisadas con lupa" width="1000" height="563" loading="lazy">
+      </div>
+      <span class="kicker" style="margin-top:40px">Han confiado en nosotros</span>
+      <ul class="logos" id="logos"></ul>
+    </div>
+  </section>
+
+  <!-- HAZ TU PEDIDO -->
+  <section id="pedido" aria-labelledby="order-t">
+    <div class="wrap order">
+      <div class="side">
+        <span class="kicker">Haz tu pedido</span>
+        <h2 class="section-title" id="order-t">Cuéntenos qué necesita.</h2>
+        <p>Llene lo que sepa. Al tocar el botón se abre WhatsApp con su pedido escrito, listo para enviárselo a Manuel.</p>
+        <ul class="reassure">
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Le responde una persona, no un robot.</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>¿No sabe las medidas? Escriba "no sé" y le ayudamos.</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Su archivo o fotos los puede mandar por el mismo chat.</li>
+        </ul>
+      </div>
+      <form class="glass" id="orderForm" novalidate>
+        <div class="row2">
+          <div><label for="f-nombre">Su nombre</label><input id="f-nombre" name="nombre" autocomplete="name" required></div>
+          <div><label for="f-empresa">Empresa <small>(opcional)</small></label><input id="f-empresa" name="empresa" autocomplete="organization"></div>
+        </div>
+        <div class="row2">
+          <div><label for="f-producto">¿Qué necesita?</label>
+            <select id="f-producto" name="producto" required>
+              <option value="">Escoja uno…</option>
+              <option>Pendón</option><option>Vinilo adhesivo</option><option>Vinilo microperforado</option><option>Banner / lona</option>
+              <option>Cerramiento de obra</option><option>Roll up, araña o trípode</option><option>Aviso o caja de luz</option>
+              <option>Corte láser</option><option>Señalización</option><option>Tarjetas de presentación</option><option>Volantes</option><option>Otro trabajo</option>
+            </select></div>
+          <div><label for="f-cant">Cantidad</label><input id="f-cant" name="cantidad" inputmode="numeric" placeholder="Ej: 2"></div>
+        </div>
+        <div><label for="f-medidas">Medidas <small>(si las sabe)</small></label><input id="f-medidas" name="medidas" placeholder="Ej: 80 × 180 cm"></div>
+        <div><label for="f-detalle">Cuéntenos más</label><textarea id="f-detalle" name="detalle" placeholder="Para qué es, dónde va, si necesita instalación, para cuándo lo necesita…"></textarea></div>
+        <p class="err" id="f-err" role="alert" hidden>Escriba su nombre y escoja qué necesita.</p>
+        <div class="form-foot">
+          <p>No guardamos nada en esta página: su pedido sale directo por WhatsApp.</p>
+          <button class="btn btn-wa" type="submit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Enviar por WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" aria-labelledby="ct-t">
+    <div class="wrap">
+      <span class="kicker">Contacto</span>
+      <h2 class="section-title" id="ct-t">Visítenos o escríbanos.</h2>
+      <div class="contact">
+        <a class="ct glass reveal" href="https://wa.me/573144719266" target="_blank" rel="noopener"><span class="ic" style="background:var(--wa)" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><div><strong>WhatsApp</strong><span>+57 314 471 9266</span></div></a>
+        <a class="ct glass reveal" href="tel:+573144719266"><span class="ic" style="background:var(--cyan-ink)" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span><div><strong>Llamar</strong><span>+57 314 471 9266</span></div></a>
+        <a class="ct glass reveal" href="mailto:manuel.modosimpresos@gmail.com"><span class="ic" style="background:var(--magenta-ink)" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><div><strong>Correo</strong><span>manuel.modosimpresos@gmail.com</span></div></a>
+        <a class="ct glass reveal" href="https://www.google.com/maps/search/?api=1&query=Carrera+27+%23+9-43+Bogot%C3%A1" target="_blank" rel="noopener"><span class="ic" style="background:var(--key)" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><div><strong>Local</strong><span>Carrera 27 # 9-43, Local 111a · Ricaurte, Bogotá</span></div></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <img src="img/logo.png" alt="" width="218" height="112" loading="lazy">
+  <p>Modos Impresos · Bogotá, Colombia</p>
+</footer>
+
+<a class="fab" href="https://wa.me/573144719266?text=Hola%20Modos%20Impresos%2C%20quiero%20cotizar%20un%20trabajo." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a>
+
+<script>
+(function(){
+  var TRABAJOS = [
+    ["Servicios_01_Vinilo","Vinilo adhesivo","Laminado","Gran formato"],
+    ["Servicios_02_GranFormato","Banner","Full color para fachada","Gran formato"],
+    ["Servicios_03_GranFormato","Microperforado","Vidrios con visión hacia afuera","Gran formato"],
+    ["Servicios_04_GranFormato","Floor graphics","Vinilo para piso","Gran formato"],
+    ["Servicios_05_GranFormato","Panaflex","Cajas de luz y avisos","Gran formato"],
+    ["Servicios_06_GranFormato","Lapsol","Impresión en lapsol","Gran formato"],
+    ["Servicios_07_GranFormato","Lienzo tratado","Acabado tipo cuadro","Gran formato"],
+    ["Servicios_08_GranFormato","Blackout laminado","Doble cara","Gran formato"],
+    ["Servicios_01_Cerramiento","Cerramiento de obra","Banner o vinilo laminado","Gran formato"],
+    ["Servicios_01_PequenoFormato","Tarjeta corporativa","Mate + brillo UV","Pequeño formato"],
+    ["Servicios_02_PequenoFormato","Tarjeta corporativa","Acabado brillante","Pequeño formato"],
+    ["Servicios_03_PequenoFormato","Tarjeta cuadrada","Cuatro tintas","Pequeño formato"],
+    ["Servicios_04_PequenoFormato","Volantes","1/4 carta","Pequeño formato"],
+    ["Servicios_05_PequenoFormato","Puntas redondeadas","Tarjetas","Pequeño formato"],
+    ["Servicios_06_PequenoFormato","Volantes","1/4 carta 4x4","Pequeño formato"],
+    ["Servicios_01_Pendon","Roll up","100 × 200 cm","Displays"],
+    ["Servicios_02_Pendon","Trípode","100 × 200 cm","Displays"],
+    ["Servicios_03_Pendon","Araña","60 × 160 cm","Displays"],
+    ["Servicios_04_Pendon","Pop man","120 × 60 cm","Displays"],
+    ["Servicios_01_Especiales","Aviso en acrílico","Acrílico con vinilo","Especiales"],
+    ["Servicios_02_Especiales","Corte láser","MDF, acrílico, poliestireno","Especiales"],
+    ["Servicios_03_Especiales","Tropezones","120 × 70 cm","Especiales"],
+    ["Servicios_04_Especiales","Caja de luz","Panaflex iluminado","Especiales"]
+  ];
+  var g = document.getElementById('gallery');
+  g.innerHTML = TRABAJOS.map(function(t){
+    return '<li data-cat="'+t[3]+'"><figure><img src="img/trabajos/'+t[0]+'.jpg" alt="'+t[1]+': '+t[2]+'" width="800" height="500" loading="lazy"><figcaption>'+t[1]+'<span>'+t[2]+'</span></figcaption></figure></li>';
+  }).join('');
+  var btns = document.querySelectorAll('.filters button');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true' : 'false'); });
+      var f = b.getAttribute('data-f');
+      g.querySelectorAll('li').forEach(function(li){ li.hidden = !(f==='todo' || li.getAttribute('data-cat')===f); });
+    });
+  });
+
+  var logos = '';
+  for (var i=1;i<=13;i++){ var n=(i<10?'0':'')+i; logos += '<li><img src="img/clientes/socio-'+n+'.png" alt="Logo de cliente '+i+'" width="800" height="500" loading="lazy"></li>'; }
+  document.getElementById('logos').innerHTML = logos;
+
+  // El pedido se arma como texto y se abre en WhatsApp: la página no guarda ni envía nada por su cuenta.
+  var form = document.getElementById('orderForm'), err = document.getElementById('f-err');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = function(id){ return document.getElementById(id).value.trim(); };
+    if (!v('f-nombre') || !v('f-producto')) { err.hidden = false; (v('f-nombre') ? document.getElementById('f-producto') : document.getElementById('f-nombre')).focus(); return; }
+    err.hidden = true;
+    var lineas = ['Hola Modos Impresos, quiero hacer un pedido.', '', 'Nombre: '+v('f-nombre')];
+    if (v('f-empresa')) lineas.push('Empresa: '+v('f-empresa'));
+    lineas.push('Producto: '+v('f-producto'));
+    if (v('f-cant')) lineas.push('Cantidad: '+v('f-cant'));
+    if (v('f-medidas')) lineas.push('Medidas: '+v('f-medidas'));
+    if (v('f-detalle')) lineas.push('Detalle: '+v('f-detalle'));
+    window.open('https://wa.me/573144719266?text='+encodeURIComponent(lineas.join('\n')), '_blank', 'noopener');
+  });
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

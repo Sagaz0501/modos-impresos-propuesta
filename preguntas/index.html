@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preguntas para papá</title>
+<meta name="description" content="Lo que Santiago necesita saber para armar el cerebro y la página nueva de Modos Impresos.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FBF8F3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Varela+Round&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F3;--ink:#1C1B20;--ink-soft:#4A4852;--line:rgba(28,27,32,.10);--card:rgba(255,255,255,.80);
+    --cyan:#00A6DB;--cyan-ink:#006A8E;--magenta:#E5007D;--magenta-ink:#AE005E;--yellow:#FFD400;--yellow-soft:#FFF4B8;--key:#1C1B20;
+    --radius:24px;--shadow:0 1px 2px rgba(28,27,32,.05), 0 12px 32px -12px rgba(28,27,32,.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;font-size:19px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:1rem;line-height:1.6;overflow-x:hidden}
+  .ink-blobs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .ink-blobs span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.30}
+  .ink-blobs .c{width:420px;height:420px;background:var(--cyan);top:-120px;left:-140px}
+  .ink-blobs .m{width:380px;height:380px;background:var(--magenta);top:30%;right:-200px;opacity:.16}
+  .ink-blobs .y{width:460px;height:460px;background:var(--yellow);bottom:-180px;left:10%;opacity:.28}
+  h1,h2,h3{font-family:"Varela Round","Nunito Sans",sans-serif;font-weight:400;line-height:1.15;margin:0}
+  p{margin:0}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+  @media (min-width:640px){.wrap{padding:0 24px}}
+  header{padding:20px 0 0}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  header img{height:48px;width:auto;display:block}
+  header a{font-weight:700;color:var(--cyan-ink);font-size:.9rem}
+  .kicker{display:inline-block;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--magenta-ink);margin-bottom:10px}
+  .intro{padding:36px 0 12px}
+  .intro h1{font-size:clamp(2.1rem,7vw,3.2rem)}
+  .intro p{margin-top:14px;font-size:1.1rem;color:var(--ink-soft);max-width:40ch}
+  .progress{margin-top:20px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:.9rem;color:var(--ink-soft)}
+  .progress .bar{flex:1;height:10px;border-radius:999px;background:rgba(28,27,32,.08);overflow:hidden}
+  .progress .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--yellow));transition:width .3s ease}
+
+  fieldset{border:0;margin:0;padding:0}
+  .group{margin-top:32px}
+  .group > h2{font-size:1.6rem;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .group > h2 .dot{width:14px;height:14px;border-radius:50%;background:var(--accent)}
+  .q{background:var(--card);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);border-radius:var(--radius);padding:20px;margin-bottom:14px;-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);position:relative;overflow:hidden}
+  .q::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--accent)}
+  .q > label,.q legend{display:block;font-weight:800;font-size:1.05rem;margin-bottom:4px;padding:0}
+  .q legend{float:left;width:100%}
+  .q legend + *{clear:both}
+  .q .why{font-size:.88rem;color:var(--ink-soft);margin-bottom:10px}
+  textarea{width:100%;min-height:96px;border-radius:14px;border:1.5px solid rgba(28,27,32,.18);background:#fff;padding:12px 14px;font:inherit;color:var(--ink);resize:vertical}
+  .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .opts label{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 18px;border-radius:999px;border:1.5px solid rgba(28,27,32,.18);background:#fff;font-weight:700;cursor:pointer}
+  .opts input{width:20px;height:20px;accent-color:var(--magenta-ink);margin:0}
+  .opts label:has(input:checked){border-color:var(--magenta-ink);background:#FCE3F0}
+  .q .opts + textarea{margin-top:10px;min-height:64px}
+  .c-cyan{--accent:var(--cyan)}.c-mag{--accent:var(--magenta)}.c-yel{--accent:var(--yellow)}.c-key{--accent:var(--key)}
+  .checks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .checks label{display:flex;gap:12px;align-items:flex-start;font-weight:700;cursor:pointer}
+  .checks input{flex:none;width:24px;height:24px;margin-top:2px;accent-color:var(--magenta-ink)}
+  .checks span{display:block;font-weight:600;color:var(--ink-soft);font-size:.92rem}
+  :focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+
+  .send{margin:36px 0 24px;background:var(--key);color:#fff;border-radius:28px;padding:28px 22px;position:relative;overflow:hidden}
+  .send::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:var(--cyan);filter:blur(80px);opacity:.35;top:-120px;right:-80px}
+  .send > *{position:relative}
+  .send h2{font-size:1.7rem;margin-bottom:8px}
+  .send p{color:#EDEBF2}
+  .send button{margin-top:18px;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 28px;border-radius:999px;border:0;background:var(--yellow);color:var(--key);font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer}
+  .send .ok{margin-top:12px;font-weight:700;color:var(--yellow)}
+  .saved{font-size:.85rem;color:var(--ink-soft);text-align:center;padding-bottom:40px}
+  @media (prefers-reduced-motion:reduce){.progress .bar i{transition:none}}
+  @media (prefers-reduced-transparency:reduce){.q{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}}
+</style>
+</head>
+<body>
+<div class="ink-blobs" aria-hidden="true"><span class="c"></span><span class="m"></span><span class="y"></span></div>
+
+<header>
+  <div class="wrap">
+    <img src="../img/logo.png" alt="Modos Impresos" width="218" height="112">
+    <a href="../">← La propuesta</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <span class="kicker">Para: papá · De: Santiago</span>
+    <h1>Unas preguntas, con calma.</h1>
+    <p>Responde lo que sepas, con tus palabras. No tienes que hacerlo todo de una vez: lo que escribas se queda guardado en este celular o computador.</p>
+    <div class="progress"><div class="bar" aria-hidden="true"><i id="pbar"></i></div><span id="ptext" aria-live="polite">0 de 13</span></div>
+  </section>
+
+  <form id="f" autocomplete="off">
+    <div class="group c-mag">
+      <h2><span class="dot" aria-hidden="true"></span>Lo más importante</h2>
+      <fieldset class="q c-mag">
+        <legend>¿Te gusta la idea del cerebro de Modos?</legend>
+        <div class="opts">
+          <label><input type="radio" name="idea" value="Sí, dale">Sí, dale</label>
+          <label><input type="radio" name="idea" value="Tengo dudas">Tengo dudas</label>
+          <label><input type="radio" name="idea" value="No por ahora">No por ahora</label>
+        </div>
+        <textarea name="idea_nota" aria-label="Si tienes dudas, cuéntamelas" placeholder="Si tienes dudas, cuéntamelas aquí"></textarea>
+      </fieldset>
+      <fieldset class="q c-mag">
+        <legend>¿Usas WhatsApp normal o WhatsApp Business?</legend>
+        <p class="why">Mira el ícono en tu celular: el de Business tiene una "B".</p>
+        <div class="opts">
+          <label><input type="radio" name="wa" value="Normal">Normal</label>
+          <label><input type="radio" name="wa" value="Business">Business</label>
+          <label><input type="radio" name="wa" value="No sé">No sé</label>
+        </div>
+        <p class="why" style="margin-top:12px">Para que el cerebro pueda leer tus chats tiene que ser Business. Conservas tu número, tus chats y tus contactos, y yo te ayudo a pasarlo.</p>
+        <div class="opts">
+          <label><input type="radio" name="wa_ok" value="Sí, me paso a Business">Sí, me paso</label>
+          <label><input type="radio" name="wa_ok" value="Prefiero que lo hablemos">Hablémoslo</label>
+        </div>
+      </fieldset>
+      <div class="q c-mag">
+        <label for="q-chats">¿Qué chats no quieres que vea nunca?</label>
+        <p class="why">Por ejemplo: familia, amigos, grupos. Por defecto solo ve los que tú marques como clientes.</p>
+        <textarea id="q-chats" name="chats"></textarea>
+      </div>
+    </div>
+
+    <div class="group c-cyan">
+      <h2><span class="dot" aria-hidden="true"></span>Tu día a día</h2>
+      <div class="q c-cyan">
+        <label for="q-tiempo">De todo lo que haces en el día, ¿qué es lo que más tiempo te quita?</label>
+        <p class="why">Con esto decido qué le enseño primero al cerebro.</p>
+        <textarea id="q-tiempo" name="tiempo"></textarea>
+      </div>
+      <div class="q c-cyan">
+        <label for="q-correo">¿A cuál de tus correos te llegan los pedidos?</label>
+        <p class="why">manuel.modosimpresos@gmail.com o impresion.modos@gmail.com. ¿Para qué usas cada uno?</p>
+        <textarea id="q-correo" name="correo"></textarea>
+      </div>
+      <div class="q c-cyan">
+        <label for="q-datos">Cuando alguien te pide un trabajo, ¿qué datos necesitas sí o sí para cotizarlo?</label>
+        <p class="why">Medidas, material, cantidad, si hay que instalar, para cuándo, si trae el diseño…</p>
+        <textarea id="q-datos" name="datos"></textarea>
+      </div>
+    </div>
+
+    <div class="group c-yel">
+      <h2><span class="dot" aria-hidden="true"></span>Tus archivos</h2>
+      <div class="q c-yel">
+        <label for="q-archivos">¿Dónde guardas tus archivos de Modos? ¿Tu computador es Windows o Mac?</label>
+        <p class="why">Cotizaciones, diseños, facturas. Una carpeta, varias, una memoria USB…</p>
+        <textarea id="q-archivos" name="archivos"></textarea>
+      </div>
+      <div class="q c-yel">
+        <label for="q-cotiza">¿Dónde haces las cotizaciones?</label>
+        <p class="why">En Word, en Excel, a mano, o solo escribes el precio por WhatsApp.</p>
+        <textarea id="q-cotiza" name="cotiza"></textarea>
+      </div>
+      <div class="q c-yel">
+        <label for="q-factura">¿Con qué facturas? ¿Un programa o lo hace tu contador?</label>
+        <p class="why">Siigo, Alegra, el de la DIAN… Solo el nombre.</p>
+        <textarea id="q-factura" name="factura"></textarea>
+      </div>
+    </div>
+
+    <div class="group c-key">
+      <h2><span class="dot" aria-hidden="true"></span>La página nueva</h2>
+      <div class="q c-key">
+        <label for="q-pagina">¿Qué te parece la página nueva? ¿Qué le cambiarías?</label>
+        <p class="why"><a href="../pagina/" style="color:var(--cyan-ink);font-weight:700">Mírala aquí</a> y dime con toda confianza.</p>
+        <textarea id="q-pagina" name="pagina"></textarea>
+      </div>
+      <div class="q c-key">
+        <label for="q-vender">¿Qué trabajos quieres que la gente vea primero?</label>
+        <p class="why">¿Hay algo que quieras vender más, o algo que ya no quieras ofrecer?</p>
+        <textarea id="q-vender" name="vender"></textarea>
+      </div>
+      <div class="q c-key">
+        <label for="q-dominio">¿Quién te hizo la página vieja y quién paga modosimpresos.com.co?</label>
+        <p class="why">Para poner la página nueva en tu misma dirección.</p>
+        <textarea id="q-dominio" name="dominio"></textarea>
+      </div>
+    </div>
+
+    <div class="group c-mag">
+      <h2><span class="dot" aria-hidden="true"></span>Lo que me puedes mandar</h2>
+      <div class="q c-mag">
+        <ul class="checks">
+          <li><label><input type="checkbox" name="mandar" value="Logo en buena calidad">Tu logo en buena calidad<span>El archivo original si lo tienes (AI, PDF o PNG grande).</span></label></li>
+          <li><label><input type="checkbox" name="mandar" value="Fotos de trabajos">Fotos de tus trabajos<span>Los que más te gusten, o permiso para usar las de Instagram.</span></label></li>
+          <li><label><input type="checkbox" name="mandar" value="1–2 cotizaciones">Una o dos cotizaciones como las mandas hoy<span>Puedes cambiarle el nombre al cliente.</span></label></li>
+          <li><label><input type="checkbox" name="mandar" value="Una factura">Una factura<span>Para que el cerebro aprenda a leerlas.</span></label></li>
+        </ul>
+      </div>
+    </div>
+  </form>
+
+  <section class="send" aria-labelledby="send-t">
+    <h2 id="send-t">¿Listo?</h2>
+    <p>Toca el botón y tus respuestas quedan copiadas. Pégalas en un WhatsApp para mí o respóndeme el correo con ellas.</p>
+    <button type="button" id="copy">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar mis respuestas</button>
+    <p class="ok" id="ok" role="status" hidden>¡Copiadas! Ahora pégalas en WhatsApp o en el correo.</p>
+  </section>
+  <p class="saved">Gracias, papá. — Santiago</p>
+</main>
+
+<script>
+(function(){
+  var KEY = 'modos-preguntas-v1';
+  var form = document.getElementById('f');
+  var total = 13;
+
+  function load(){
+    var d = null;
+    try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+    if (!d) return;
+    Array.prototype.forEach.call(form.elements, function(el){
+      if (!el.name || !(el.name in d)) return;
+      if (el.type === 'radio') el.checked = d[el.name] === el.value;
+      else if (el.type === 'checkbox') el.checked = (d[el.name] || []).indexOf(el.value) >= 0;
+      else el.value = d[el.name];
+    });
+  }
+  function data(){
+    var d = {};
+    Array.prototype.forEach.call(form.elements, function(el){
+      if (!el.name) return;
+      if (el.type === 'radio') { if (el.checked) d[el.name] = el.value; }
+      else if (el.type === 'checkbox') { d[el.name] = d[el.name] || []; if (el.checked) d[el.name].push(el.value); }
+      else d[el.name] = el.value;
+    });
+    return d;
+  }
+  function progress(d){
+    var keys = ['idea','wa','chats','tiempo','correo','datos','archivos','cotiza','factura','pagina','vender','dominio'];
+    var n = keys.filter(function(k){ return d[k] && String(d[k]).trim(); }).length + ((d.mandar || []).length ? 1 : 0);
+    document.getElementById('pbar').style.width = (n / total * 100) + '%';
+    document.getElementById('ptext').textContent = n + ' de ' + total;
+  }
+  function save(){
+    var d = data();
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){}
+    progress(d);
+  }
+  load(); progress(data());
+  form.addEventListener('input', save);
+  form.addEventListener('change', save);
+
+  document.getElementById('copy').addEventListener('click', function(){
+    var out = ['Respuestas de papá — Modos Impresos', ''];
+    form.querySelectorAll('.q').forEach(function(q){
+      var title = (q.querySelector('legend') || q.querySelector('label')).textContent.trim();
+      var parts = [];
+      q.querySelectorAll('input:checked').forEach(function(i){ parts.push(i.value); });
+      q.querySelectorAll('textarea').forEach(function(t){ if (t.value.trim()) parts.push(t.value.trim()); });
+      if (q.querySelector('.checks')) title = 'Lo que te voy a mandar';
+      out.push('• ' + title, '  ' + (parts.length ? parts.join(' — ') : '(sin responder)'), '');
+    });
+    var txt = out.join('\n'), ok = document.getElementById('ok');
+    function done(){ ok.hidden = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback);
+    else fallback();
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = txt; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+</body>
+</html>
